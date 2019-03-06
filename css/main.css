@@ -92,7 +92,7 @@ body {
 
 .bd-example {
     position: sticky;
-    top: 69px;
+    top: 78px;
 }
 
 #body {
@@ -105,4 +105,5 @@ body {
     position: sticky;
     z-index: 3;
     top: 0;
+    box-shadow: 1px 0px 3px 2px rgb(0, 0, 0, 0.2);
 }
