@@ -57,8 +57,14 @@ body {
     border-bottom-right-radius: 10px;
 }
 
+#ls:hover,
+#rs:hover {
+    cursor: grabbing;
+}
+
 .il::before {
     content: '\2770';
+    font-size: 20px;
     position: absolute;
     top: 40%;
     left: -15px;
@@ -67,10 +73,36 @@ body {
 .ir::before {
     content: '\2771';
     position: absolute;
+    font-size: 20px;
     top: 40%;
     right: -15px;
 }
 
 .hide {
     display: none;
+}
+
+.bshadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px -180px 150px -50px rgb(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.bd-example {
+    position: sticky;
+    top: 69px;
+}
+
+#body {
+    position: relative;
+    z-index: 2;
+    background-color: white;
+}
+
+.navbar {
+    position: sticky;
+    z-index: 3;
+    top: 0;
 }
