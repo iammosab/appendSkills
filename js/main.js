@@ -1,6 +1,6 @@
 $(document).ready(() => {
     contents = $('.contents').eq(0).find('.item');
-    nbrContents = 4;
+    nbrContents = 6;
     if (!contents.eq(0).hasClass('hide'))
         $('#rs').addClass('hide');
     $('#ls').on('click', () => {
