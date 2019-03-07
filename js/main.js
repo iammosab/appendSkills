@@ -1,6 +1,11 @@
 $(document).ready(() => {
-    nbrContents = 6;
 
+    if (document.body.offsetWidth >= 992)
+        slideContents(6);
+    else if (document.body.offsetWidth >= 720)
+        slideContents(3);
+    else if (document.body.offsetWidth >= 540)
+        slideContents(2);
     for (var t = 0; t < $('.contents').length; t++) {
         var contents = $('.contents').eq(t).find('.item');
         var btnr = $('.contents').eq(t).find('.ir');
@@ -9,9 +14,43 @@ $(document).ready(() => {
             btnr.addClass('hide');
     }
 
+    $(window).resize(function() {
+        var width = document.body.offsetWidth;
+        if (width >= 992)
+            slideContents(6);
+        else if (width >= 720)
+            slideContents(3);
+        else if (width >= 540)
+            slideContents(2);
+    });
+
+});
+
+function itemsToShow(nbr) {
+    for (var t = 0; t < $('.contents').length; t++) {
+        var contents = $('.contents').eq(t).find('.item');
+        for (var j = 0; j < contents.length; j++) {
+            if (j < nbr) {
+                contents.eq(j).removeClass('hide');
+            } else {
+                contents.eq(j).addClass('hide');
+            }
+        }
+        var btnr = $('.contents').eq(t).find('.ir');
+        var btnl = $('.contents').eq(t).find('.il');
+        if (!contents.eq(0).hasClass('hide')) {
+            btnr.addClass('hide');
+            btnl.removeClass('hide');
+        }
+
+    }
+}
+
+function slideContents(nbr) {
+    itemsToShow(nbr);
+    var nbrContents = nbr;
     $('.il').click(function() {
         var contents = $(this).closest('.contents').find('.item');
-        console.log(contents);
         var j = -1;
         var c = 1;
         for (var i = 0; i < contents.length; i++) {
@@ -32,6 +71,9 @@ $(document).ready(() => {
         }
         if (!contents.eq(contents.length - 1).hasClass('hide')) {
             $(this).addClass('hide');
+            $(this).closest('.contents').find('.ir').removeClass('hide');
+        }
+        if (contents.eq(0).hasClass('hide')) {
             $(this).closest('.contents').find('.ir').removeClass('hide');
         }
     });
@@ -67,5 +109,8 @@ $(document).ready(() => {
             $(this).addClass('hide');
             $(this).closest('.contents').find('.il').removeClass('hide');
         }
+        if (contents.eq(contents.length - 1).hasClass('hide')) {
+            $(this).closest('.contents').find('.il').removeClass('hide');
+        }
     });
-});
+}
