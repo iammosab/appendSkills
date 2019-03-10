@@ -23,6 +23,26 @@ $(document).ready(() => {
         else if (width >= 540)
             slideContents(2);
     });
+    $('#exampleModalCenter').on('shown.bs.modal', function(e) {
+        var video = document.getElementById('modalvideo');
+        video.currentTime = 0;
+        video.play();
+    });
+    $('#exampleModalCenter').on('hidden.bs.modal', function(e) {
+        var video = document.getElementById('modalvideo');
+        video.pause();
+    });
+    $('#exampleModalCenter').on('show.bs.modal', function(e) {
+        $('nav').css('width', '102%');
+        $('main').css('width', '102%');
+        $('footer').css('width', '102%');
+    });
+    $('#exampleModalCenter').on('hide.bs.modal', function(e) {
+        $('nav').css('width', '100%');
+        $('main').css('width', '100%');
+        $('footer').css('width', '100%');
+
+    });
 
 });
 

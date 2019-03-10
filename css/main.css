@@ -42,11 +42,14 @@ body {
     box-shadow: inset 0px -160px 200px -35px rgb(0, 0, 0, 0.6) !important;
 }
 
+.style-card-1 {
+    padding: 5px;
+    border: none;
+}
+
 .card {
     margin-top: 4px;
     margin-bottom: 4px;
-    padding: 5px;
-    border: none;
 }
 
 .card-body {
@@ -55,6 +58,10 @@ body {
     border-top: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.cursor-grabbing {
+    cursor: grabbing;
 }
 
 #ls:hover,
@@ -125,4 +132,13 @@ main {
     .bd-example {
         top: 57px;
     }
+}
+
+.content-center {
+    margin-left: auto!important;
+    margin-right: auto!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
 }
