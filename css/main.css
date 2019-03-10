@@ -142,3 +142,9 @@ main {
     display: -ms-flexbox!important;
     display: flex!important;
 }
+
+@media (min-width: 1000px) {
+    .modal-dialog-1 {
+        max-width: 60%!important;
+    }
+}
