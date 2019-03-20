@@ -1,6 +1,6 @@
 @font-face {
     font-family: PT;
-    src: url(../fonts/PT/PT_Sans-Web-Regular.ttf);
+    src: url(../webfonts/PT/PT_Sans-Web-Regular.ttf);
 }
 
 body {
@@ -45,6 +45,11 @@ body {
 .style-card-1 {
     padding: 5px;
     border: none;
+}
+
+.default-card .card-body {
+    border: none;
+    border-radius: none;
 }
 
 .card {
@@ -147,4 +152,35 @@ main {
     .modal-dialog-1 {
         max-width: 60%!important;
     }
+}
+
+.mbw-style-1 {
+    display: flex;
+}
+
+.mbw-style-1 div {
+    margin-right: 8px;
+}
+
+.mbw-style-1 span {
+    font-size: 12px;
+}
+
+.mbw-style-1 p {
+    font-size: 18px;
+}
+
+.form-control[readonly] {
+    outline: none;
+    border: none;
+    background-color: white !important;
+    box-shadow: none;
+}
+
+.add {
+    position: absolute;
+    z-index: 50;
+    background-color: white;
+    width: 100%;
+    height: 100%;
 }
