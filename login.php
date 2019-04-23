@@ -15,22 +15,31 @@
         <div class="row text-center">
             <h2 class="col-12">AppendSkills</h2>
         </div>
+        <div class="mr-auto ml-auto" style="width: 500px;">
+            <?php if (isset($_GET['e'])){
+                if ($_GET['e']=='mdp')
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">Invalide mot de passe<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                elseif ($_GET['e']=='email')
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">Invalide email<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+            } ?>
+        </div>
         <div class="card my-4 mr-auto ml-auto default-card text-center" style="width:500px">
             <div class="card-header">
                 Se connecter
             </div>
             <div class="card-body">
-                <form>
+                <form method="post" action="../controllers/UserController.php">
+                    <input type="text" name="op" value="simpleuserlogin" hidden>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                            <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                            <input type="password" class="form-control" id="inputPassword3" name="passe" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group row">

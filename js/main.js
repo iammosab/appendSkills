@@ -1,51 +1,159 @@
 $(document).ready(() => {
 
-    if (document.body.offsetWidth >= 992)
-        slideContents(6);
-    else if (document.body.offsetWidth >= 720)
-        slideContents(3);
-    else if (document.body.offsetWidth >= 540)
-        slideContents(2);
-    for (var t = 0; t < $('.contents').length; t++) {
-        var contents = $('.contents').eq(t).find('.item');
-        var btnr = $('.contents').eq(t).find('.ir');
-        var btnl = $('.contents').eq(t).find('.il');
-        if (!contents.eq(0).hasClass('hide'))
-            btnr.addClass('hide');
+    for (let i = 0; i <$('.items-container').length ; i++) {
+        contents = document.getElementsByClassName('items-container')[i].getElementsByClassName('contents')[0];
+        items = contents.getElementsByClassName('item');
+        itemsLength = items[0].scrollWidth*items.length;
+        if (contents.scrollLeft == 0)
+            $('.items-container').eq(i).find('.il').addClass('hide');
+
+        if (contents.offsetWidth == itemsLength || contents.offsetWidth+10 >= itemsLength  )
+            $('.items-container').eq(i).find('.ir').addClass('hide');
+
     }
 
+    $('.ir').click(function () {
+        var contents = $(this).closest('.items-container').find('.contents').eq(0);
+        var item = $(this).closest('.items-container').find('.contents').eq(0).find('.item').eq(0);
+        var newscroll =  contents.scrollLeft() + item.width() +10;
+        contents.scrollLeft(newscroll);
+        scrollchange(contents);
+    });
+    $('.il').click(function () {
+        var contents = $(this).closest('.items-container').find('.contents').eq(0);
+        var item = $(this).closest('.items-container').find('.contents').eq(0).find('.item').eq(0);
+        var newscroll =  contents.scrollLeft() - item.width() -10;
+        contents.scrollLeft(newscroll);
+        scrollchange(contents);
+    });
+
     $(window).resize(function() {
-        var width = document.body.offsetWidth;
-        if (width >= 992)
-            slideContents(6);
-        else if (width >= 720)
-            slideContents(3);
-        else if (width >= 540)
-            slideContents(2);
+        for (let i = 0; i <$('.items-container').length ; i++) {
+            contents = document.getElementsByClassName('items-container')[i].getElementsByClassName('contents')[0];
+            items = contents.getElementsByClassName('item');
+            itemsLength = items[0].scrollWidth*items.length;
+            if (contents.scrollLeft == 0)
+                $('.items-container').eq(i).find('.il').addClass('hide');
+            else
+                $('.items-container').eq(i).find('.il').removeClass('hide');
+
+            if (contents.offsetWidth == itemsLength || contents.offsetWidth+10 >= itemsLength  )
+                $('.items-container').eq(i).find('.ir').addClass('hide');
+            else
+                $('.items-container').eq(i).find('.ir').removeClass('hide');
+
+        }
     });
-    $('#exampleModalCenter').on('shown.bs.modal', function(e) {
-        var video = document.getElementById('modalvideo');
-        video.currentTime = 0;
-        video.play();
-    });
+
+    var scrollchange = function(contents){
+        if(contents.scrollLeft() > 0)
+            contents.closest('.items-container').eq(0).find('.il').removeClass('hide');
+        else
+            contents.closest('.items-container').eq(0).find('.il').addClass('hide');
+        if (contents.width()%contents.scrollLeft()==0 || contents.scrollLeft() == contents.width()*2 )
+            contents.closest('.items-container').eq(0).find('.ir').addClass('hide');
+        else
+            contents.closest('.items-container').eq(0).find('.ir').removeClass('hide');
+    }
+
+
+
+
     $('#exampleModalCenter').on('hidden.bs.modal', function(e) {
         var video = document.getElementById('modalvideo');
         video.pause();
     });
-    $('#exampleModalCenter').on('show.bs.modal', function(e) {
+    $('#intro_modal').on('show.bs.modal', function(e) {
         $('nav').css('width', '102%');
         $('main').css('width', '102%');
         $('footer').css('width', '102%');
+        $('#intro_Email').val('');
+        $('#intro_Password').val('');
+
     });
-    $('#exampleModalCenter').on('hide.bs.modal', function(e) {
+    $('#intro_modal').on('hide.bs.modal', function(e) {
         $('nav').css('width', '100%');
         $('main').css('width', '100%');
         $('footer').css('width', '100%');
 
     });
 
+
+
+    $('#intro_submit').click(function () {
+
+        if($('#intro_Email').val() == "" && $('#intro_Password').val() == "")
+            message('danger','Vous devez remplir les champs');
+        else{
+            if($(this).hasClass('inscrire')){
+
+                $.ajax({
+                    url: '../controllers/UserController.php',
+                    async: false,
+                    method: 'POST',
+                    data:{ op:'login', email : $('#intro_Email').val(), passe: $('#intro_Password').val()},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data == '0' || data == '-1')
+                            message('danger','Saisie invalide');
+                        else
+                            window.location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        message('danger','Connexion erreur');
+                    }
+                });
+
+
+            }else if ($(this).hasClass('connecter')){
+
+                $.ajax({
+                    url: '../controllers/UserController.php',
+                    async: false,
+                    method: 'POST',
+                    data:{ op:'login', email : $('#intro_Email').val(), passe: $('#intro_Password').val()},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data == '0' || data == '-1')
+                            message('danger','Saisie invalide');
+                        else
+                            window.location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        message('danger','Connexion erreur');
+                    }
+                });
+
+            }
+        }
+
+
+    });
+
+});
+$('#intro_connecter').on('click',function () {
+
+    $('#intro_modal').on('show.bs.modal', function(e) {
+        $('#intro_submit').addClass('connecter').removeClass('inscrire').text("Se connecter");
+        $('#intro_modalTitle').text('Se connecter');
+    });
+
+
 });
 
+$('#intro_inscrire').on('click',function () {
+
+    $('#intro_modal').on('show.bs.modal', function(e) {
+        $('#intro_submit').addClass('inscrire').removeClass('connecter').text("S'inscrire");
+        $('#intro_modalTitle').text("S'inscrire");
+
+    });
+
+
+});
+var message = function (type, message) {
+    var c = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+    $('.message').html(c);
+    $('.alert').delay(3000).fadeOut('slow');
+}
 function itemsToShow(nbr) {
     for (var t = 0; t < $('.contents').length; t++) {
         var contents = $('.contents').eq(t).find('.item');
